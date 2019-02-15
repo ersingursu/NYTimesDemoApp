@@ -21,6 +21,7 @@ public enum HTTPMethod: String {
 class Network : NSObject {
 
     typealias SuccessCallback<T> = (_ response: T) -> Void
+    typealias FailCallback = (_ error : String) -> Void
     
     public static let instance = Network()
     
@@ -31,7 +32,7 @@ class Network : NSObject {
         session = URLSession.init(configuration: .default, delegate: self, delegateQueue: nil)
     }
     
-    func request<T: Decodable>(_ httpMethodType:HTTPMethod = .get, params : [String:Any],section : String,dayType : String, onSuccess: @escaping SuccessCallback<T> ){
+    func request<T: Decodable>(_ httpMethodType:HTTPMethod = .get, params : [String:Any],section : String,dayType : String, onSuccess: @escaping SuccessCallback<T> , onFailed: @escaping FailCallback ){
         
         var requestString = String.init(format: Constants.requestUrl, section,dayType)
         
@@ -70,28 +71,29 @@ class Network : NSObject {
             switch (httpResponse.statusCode)
             {
             case 200:
-                
-                let response = NSString (data: receivedData, encoding: String.Encoding.utf8.rawValue)
-                 
+               
                 do {
                     
                     let getResponse = try JSONSerialization.jsonObject(with: receivedData, options: .allowFragments)
                     
-                    print(getResponse)
+                    print("Response : ", getResponse)
                     
                     if let obj = try T.decode(from: data!) {
                         onSuccess(obj)
                     }
                 } catch {
                     print("error serializing JSON: \(error)")
+                    onFailed("Error \(error.localizedDescription)")
                 }
                 
                 break
             case 400:
-                
+                onFailed("Error \(httpResponse.statusCode)")
                 break
             default:
-                print("wallet GET request got response \(httpResponse.statusCode)")
+                print("Error \(httpResponse.statusCode)")
+                onFailed("Error \(httpResponse.statusCode)")
+                break
             }
         })
         

@@ -83,28 +83,6 @@ class BaseVC: UIViewController, UIScrollViewDelegate {
         addRightButton()
     }
 
-    func leftBarButtonItem()
-    {
-        if hidesBackButton
-        {
-            let button: UIButton = UIButton(type: .custom)
-                    button.setImage(nil, for: .normal)
-                  navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        }else
-        {
-            let button: UIButton = UIButton(type: .custom)
-            let image = UIImage(named: theme.navigationBarBackImageName)
-            if let backImage = image {
-                button.setImage(backImage, for: .normal)
-                button.addTarget(self, action: #selector(BaseVC.leftItemAction), for: .touchUpInside)
-                button.frame = CGRect(x: 0, y: 0, width: backImage.size.width, height: backImage.size.height)
-                button.clipsToBounds = true
-            }
-             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        }
-       
-    }
-
     func initBar() {
         viewBarStatus = UIView(frame:CGRect(x: 0, y: -20, width: UIScreen.main.bounds.size.width, height: 20))
         viewBarStatus!.backgroundColor = UIColor(red: 255 / 255, green: 13 / 255, blue: 134 / 255, alpha: 1.0)
@@ -250,8 +228,7 @@ class BaseVC: UIViewController, UIScrollViewDelegate {
 		view.backgroundColor = viewBackgroundColor
         calculateNavigationBar()
         createStatusbar()
-        addRightButton()
-        leftBarButtonItem()
+        addRightButton() 
 
 		if (rightButton != nil) {
 			self.navigationItem.rightBarButtonItem = rightBarButtonItem()

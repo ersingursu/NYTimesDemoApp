@@ -50,6 +50,16 @@ private let refreshControl = UIRefreshControl()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let button: UIButton = UIButton(type: .custom)
+        let image = UIImage(named: theme.navigationBarBackImageName)
+        if let backImage = image {
+            button.setImage(backImage, for: .normal)
+            button.addTarget(self, action: #selector(BaseVC.leftItemAction), for: .touchUpInside)
+            button.frame = CGRect(x: 0, y: 0, width: backImage.size.width, height: backImage.size.height)
+            button.clipsToBounds = true
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     override func rightItemMorePressed() {
@@ -206,8 +216,10 @@ extension DashboardVC {
     
     func loadNews()
     {
-        Network.instance.request(params: [:], section: "all-sections", dayType: "30") { [weak self] (response : Welcome) in
-            self?.nyTimesNews = response
+        Network.instance.request(params: [:], section: "all-sections", dayType: "30", onSuccess: { (response : Welcome) in
+           self.nyTimesNews = response
+        }) { (error) in
+            print(error)
         }
         
     }
