@@ -2,7 +2,7 @@
 //  Theme.swift
 //  Maximum
 //
-//  Created by Haluk Ates on 01/09/16.
+//  Created by Ersin Gürsu on 01/09/16.
 //  Copyright © 2016 Erdem KALAYCI. All rights reserved.
 //
 

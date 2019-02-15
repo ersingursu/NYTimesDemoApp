@@ -20,9 +20,9 @@ private let refreshControl = UIRefreshControl()
     
     var selectedItem = {(_ item:Result) -> () in }
     
-    fileprivate var nyMostPopolarNews: Welcome?{
+    fileprivate var nyTimesNews: Welcome?{
         didSet{
-            filteredNews = nyMostPopolarNews?.results
+            filteredNews = nyTimesNews?.results
         }
     }
     
@@ -157,7 +157,7 @@ extension DashboardVC : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let _ = nyMostPopolarNews else { return 0 }
+        guard let _ = nyTimesNews else { return 0 }
         return filteredNews!.count
     }
     
@@ -190,7 +190,7 @@ extension DashboardVC {
     
     func search(_ text : String?){
         
-        guard let welcome = nyMostPopolarNews else { return  }
+        guard let welcome = nyTimesNews else { return  }
         
         if (text ?? "").isEmpty{
             filteredNews = welcome.results
@@ -207,7 +207,7 @@ extension DashboardVC {
     func loadNews()
     {
         Network.instance.request(params: [:], section: "all-sections", dayType: "30") { [weak self] (response : Welcome) in
-            self?.nyMostPopolarNews = response
+            self?.nyTimesNews = response
         }
         
     }

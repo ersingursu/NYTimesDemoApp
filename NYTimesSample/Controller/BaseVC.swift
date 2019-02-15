@@ -2,7 +2,7 @@
 //  BaseVC.swift
 //  TestBaseViewController
 //
-//  Created by Haluk Ates on 05/09/16.
+//  Created by Ersin Gürsu on 05/09/16.
 //  Copyright © 2016 ASG. All rights reserved.
 //
 
