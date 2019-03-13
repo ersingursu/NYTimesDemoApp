@@ -3,7 +3,6 @@
 //  Maximum
 //
 //  Created by Ersin Gürsu on 01/09/16.
-//  Copyright © 2016 Erdem KALAYCI. All rights reserved.
 //
 
 import UIKit
